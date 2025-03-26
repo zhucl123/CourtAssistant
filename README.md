@@ -1,6 +1,8 @@
 # CourtAssistant
 AI类案推荐助手
 
+![CourtAssistant](bg.png)
+
 ## 项目概述
 本项目旨在搭建一个高效且易于部署的争议焦点提取和类案推荐大模型。团队在有限的资源和时间下，设计并实现了这一智能助手系统，能帮助法官和法律从业者更高效地处理民商事裁判文书，提高案件审理的效率与准确性。
 
@@ -37,6 +39,7 @@ AI类案推荐助手
 1. 克隆本仓库：
    ```bash
    git clone https://github.com/yourusername/CourtAssistant.git
+   ```
 
 2. 部署 CourtAssistant
    ```bash
@@ -71,7 +74,5 @@ AI类案推荐助手
 3. API 调用
 
    ```bash
-   python models.cot.py --model courtAssistant:latest --case "你的案情
+   python models.cot.py --model courtAssistant:latest --case "你的案情"
    ```
-
-### 作者：zcl
