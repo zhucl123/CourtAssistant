@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>裁判文书上传</title>
+    <!-- Favicon -->
+    <link href="/static/img/law.png" rel="icon">
+    
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Roboto:wght@500;700;900&display=swap"
+        rel="stylesheet">
+    
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Libraries Stylesheet -->
+    <link href="/static/lib/animate/animate.min.css" rel="stylesheet">
+    <link href="/static/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="/static/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+    
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Template Stylesheet -->
+    <link href="/static/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+<body>
+    <!-- 页面主体 -->
+    <div class="container-fluid py-5">
+        <div class="container">
+            <!-- 标题 -->
+            <div class="text-center mx-auto mb-5">
+                <h1 class="display-4">民事裁判文书上传</h1>
+                <hr class="w-25 mx-auto text-primary">
+            </div>
+
+            <!-- 上传表单 -->
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <form method="post" enctype="multipart/form-data" class="bg-light p-5 rounded-3 shadow">
+                        {% for case in cases %}
+                        <div class="mb-4">
+                            <label class="form-label fs-4 text-dark mb-3">{{ case }}案件</label>
+                            <div class="drop-zone border-2 border-dashed rounded-3 p-4 text-center position-relative"
+                                data-category="{{ case }}">
+                                <div class="dz-message">
+                                    <i class="bi bi-file-earmark-arrow-up fs-1 text-primary"></i>
+                                    <p class="text-muted mt-2 mb-0">拖放文件至此区域或点击上传</p>
+                                </div>
+                                <input type="file" name="{{ case }}" class="form-control d-none">
+                                <div class="file-list mt-3"></div>
+                            </div>
+                        </div>
+                        <!-- 文本输入区域 -->
+                        <div class="text-input-area">
+                            <div class="mb-3">
+                                <label class="form-label">案号</label>
+                                <input type="text" name="{{ case }}_case_number" class="form-control" placeholder="{{ case }}案号，如（2024）最高法民申7677号">
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label">正文</label>
+                                <textarea name="{{ case }}_content" class="form-control" rows="4" placeholder="{{ case }}案件正文：标题以下，落款以上"></textarea>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <!-- 提交按钮 -->
+                        <button type="submit" class="btn btn-primary btn-lg w-100 py-3">
+                            <i class="bi bi-cloud-upload me-2"></i>提交
+                        </button>
+
+                        <div class="links table-primary mt-4">
+                            <ul>
+                                <li><a href="https://wenshu.court.gov.cn" target="_blank">裁判文书网</a></li>
+                                <li><a href="https://rmfyalk.court.gov.cn" target="_blank">人民法院案例库</a></li>
+                                <li><a href="https://www.pkulaw.com" target="_blank">北大法宝</a></li>
+                            </ul>
+                        </div>
+                    </form>
+
+                    <!-- 消息提示 -->
+                    {% if message %}
+                    <div class="alert alert-{{ 'success' if '成功' in message[0] else 'danger' }} mt-4">
+                        {% for msg in message %}
+                        <p class="mb-0"><i class="bi {{ 'bi-check-circle' if '成功' in msg else 'bi-x-circle' }} me-2"></i>{{ msg }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <div class="mt-5">
+                        <div class="card shadow bg-light">
+                            <div class="card-header text-white py-3">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-folder-check me-2"></i>
+                                    已上传案号
+                                    <span class="badge bg-white text-primary ms-2">{{ uploaded|length }}</span>
+                                </h5>
+                            </div>
+                    
+                            <div class="card-body p-4">
+                                {% if uploaded %}
+                                <div class="row row-cols-1 row-cols-md-2 g-3" style="max-height: 400px; overflow-y: auto;">
+                                    {% for case_number in uploaded %}
+                                    <div class="col">
+                                        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-3 hover-shadow">
+                                            <div class="d-flex align-items-center">
+                                                <i class="bi bi-file-text fs-5 text-muted me-3"></i>
+                                                <div>
+                                                    <div class="fw-medium text-truncate">{{ case_number }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                <div class="text-center py-4">
+                                    <i class="bi bi-inbox fs-1 text-muted mb-3"></i>
+                                    <p class="text-muted mb-0">暂无已上传案号</p>
+                                </div>
+                                {% endif %}
+                    </div>
+            </div>
+            <!-- 版权信息 -->
+            <div class="container-fluid mt-5 py-4" style="background-color: #f8f9fa;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <p class="mb-0 text-muted">
+                                &copy; 2025 ZCL.
+                                All rights reserved.
+                                <!-- <span class="ms-2">京ICP备2023012345号</span> -->
+                            </p>
+                            <p class="text-muted mt-2 small">
+                                联系：202320037@uibe.edu.cn
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 交互脚本 -->
+    <script>
+        // 拖拽上传交互逻辑
+        document.querySelectorAll('.drop-zone').forEach(zone => {
+            const input = zone.querySelector('input[type="file"]')
+            const fileList = zone.querySelector('.file-list')
+
+            // 点击触发文件选择
+            zone.addEventListener('click', () => input.click())
+
+            // 拖拽事件处理
+            zone.addEventListener('dragover', e => {
+                e.preventDefault()
+                zone.classList.add('border-primary')
+            })
+
+            zone.addEventListener('dragleave', () => {
+                zone.classList.remove('border-primary')
+            })
+
+            zone.addEventListener('drop', e => {
+                e.preventDefault()
+                input.files = e.dataTransfer.files
+                updateFileList()
+                zone.classList.remove('border-primary')
+            })
+
+            // 普通文件选择
+            input.addEventListener('change', updateFileList)
+
+            function updateFileList() {
+                fileList.innerHTML = Array.from(input.files).map(file => `
+                    <div class="d-flex align-items-center text-start bg-white p-2 mb-2 rounded">
+                        <i class="bi bi-file-text fs-5 text-muted me-2"></i>
+                        <span class="text-truncate">${file.name}</span>
+                    </div>
+                `).join('')
+            }
+        })
+    </script>
+</body>
+
+</html>
