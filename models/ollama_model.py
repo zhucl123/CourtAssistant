@@ -30,7 +30,7 @@ class model(case_cut):
 if __name__ == '__main__':
 
     ds = model()
-    ds.model = "deepseek-r1:8b"
-    with open(r'典型合同\（2014）津高民四终字第79号.txt', mode='r', encoding='utf-8') as f:
-        c = f.read()
-    ds.cut(c)
+    ds.model = "courtAssistant:latest"
+    # with open(r'典型合同\（2014）津高民四终字第79号.txt', mode='r', encoding='utf-8') as f:
+    #     c = f.read()
+    # ds.cut(c)
