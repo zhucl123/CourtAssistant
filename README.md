@@ -76,7 +76,7 @@ AI类案推荐助手
 3. API 调用
 
    ```bash
-   python models.cot.py --model courtAssistant:latest --case "你的案情"
+   python models/cot.py --model courtAssistant:latest --case "你的案情"
    ```
 
 4. RAG&Agent
