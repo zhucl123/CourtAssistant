@@ -89,6 +89,8 @@ AI类案推荐助手
    Model name = courtAssistant:latest
    Base url = 127.0.0.1:6399
    ```
+
+   选择AGENT，导入 类案推荐.json
    
    ![AGENT](pics/agt.png)
 
