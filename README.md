@@ -86,8 +86,8 @@ AI类案推荐助手
    接入OLLAMA时需要配置， 一般连接失败原因是没有启动ollama serve：
 
    ```bash
-   Model name = courtAssistant:latest
-   Base url = 127.0.0.1:6399
+   Model name=courtAssistant:latest
+   Base url=127.0.0.1:6399 # 注意，如果报错Connection refused可以将ip改为主机ip
    ```
 
    选择AGENT，导入 类案推荐.json
