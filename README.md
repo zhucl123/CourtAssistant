@@ -104,4 +104,4 @@ AI类案推荐助手
 | LL  | -  |
 | GXY  | -  |
 | ZJY  | -  |
-Copyright UIBE 法学院 信息学院 国际商学院| 智法先峰
+Copyright UIBE 法学院 信息学院 国际商学院| 智法先锋
