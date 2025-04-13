@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, abort
+from flask import Flask, render_template, request, abort, jsonify
 from datetime import timedelta
 import os
 import re
+from pdf2text import convert_pdfs_to_md
 
 
 app = Flask(__name__, template_folder='templates')
@@ -95,9 +96,38 @@ def all_():
         r[case] = len(t)
     return f"<h1>{r}</h1><h1>共{sum(r.values())}份</h1>"
 
+@app.route('/agent', methods=['GET', 'POST'])
+def agent():
+    return render_template(
+        'agent.html'
+    )
+
+@app.route('/upload', methods=['POST'])
+def upload():
+    if '文件' not in request.files:
+        return jsonify({'error': 'No file part'}), 400
+    file = request.files['文件']
+    if file.filename == '':
+        return jsonify({'error': 'No selected file'}), 400
+    if file and file.filename.endswith('.pdf'):
+        # 保存文件到临时目录
+        temp_dir = os.path.join(app.config['UPLOAD_FOLDER'], 'temp')
+        os.makedirs(temp_dir, exist_ok=True)
+        temp_file_path = os.path.join(temp_dir, file.filename)
+        file.save(temp_file_path)
+
+        # 调用 convert_pdfs_to_md 函数处理文件
+        pdfs_name = [file.filename]
+        md_text = convert_pdfs_to_md(pdfs_name, base_path=temp_dir)
+
+        # 返回处理结果
+        return jsonify({'result': md_text})
+
+    return jsonify({'error': '文件格式不支持'}), 400
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
-        port=123,
+        port=5000,
         debug=True
     )
